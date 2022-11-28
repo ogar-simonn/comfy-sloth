@@ -31,7 +31,7 @@ function App() {
         <Route path="/products">
           <ProductsPage />
         </Route>
-        <Route path="/products/:id" children={<SingleProductPage />} />
+        <Route path="/single-product/:id" children={<SingleProductPage />} />
         <Route path="/checkout">
           <CheckoutPage />
         </Route>

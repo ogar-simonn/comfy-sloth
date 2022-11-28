@@ -1,16 +1,41 @@
-import React from 'react'
-import logo from '../assets/logo.svg'
-import { Link } from 'react-router-dom'
-import { useProductsContext } from '../context/products_context'
-import { FaTimes } from 'react-icons/fa'
-import { links } from '../utils/constants'
-import styled from 'styled-components'
-import CartButtons from './CartButtons'
-import { useUserContext } from '../context/user_context'
+import React from "react";
+import logo from "../assets/logo.svg";
+import { Link } from "react-router-dom";
+import { useProductsContext } from "../context/products_context";
+import { FaTimes } from "react-icons/fa";
+import { links } from "../utils/constants";
+import styled from "styled-components";
+import AuthButton from "./AuthButton";
+import { useUserContext } from "../context/user_context";
 
 const Sidebar = () => {
-  return <h4>sidebar</h4>
-}
+  const { closeSidebar, isSidebarOpen } = useProductsContext();
+  return (
+    <SidebarContainer>
+      <div className={`sidebar ${isSidebarOpen ? "show-sidebar" : ""}`}>
+        <div className="sidebar-header">
+          <Link to="/">
+            <img src={logo} alt="comfy sloth" className="logo" />
+          </Link>
+
+          <button className="close-btn" onClick={() => closeSidebar()}>
+            <FaTimes />
+          </button>
+        </div>
+        <ul className="links">
+          {links.map((link) => {
+            const { id, text, url } = link;
+            return (
+              <li key={id}>
+                <a href={url}>{text}</a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </SidebarContainer>
+  );
+};
 
 const SidebarContainer = styled.div`
   text-align: center;
@@ -24,10 +49,9 @@ const SidebarContainer = styled.div`
     font-size: 2rem;
     background: transparent;
     border-color: transparent;
-    color: var(--clr-primary-5);
+    color: #262626;
     transition: var(--transition);
     cursor: pointer;
-    color: var(--clr-red-dark);
     margin-top: 0.2rem;
   }
   .close-btn:hover {
@@ -81,6 +105,6 @@ const SidebarContainer = styled.div`
       display: none;
     }
   }
-`
+`;
 
-export default Sidebar
+export default Sidebar;

@@ -1,21 +1,55 @@
-import React from 'react'
-import { useProductsContext } from '../context/products_context'
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
-import Error from './Error'
-import Loading from './Loading'
-import Product from './Product'
+import React from "react";
+import { useProductsContext } from "../context/products_context";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import Error from "./Error";
+import Loading from "./Loading";
+import Product from "./Product";
+import { useEffect } from "react";
 
 const FeaturedProducts = () => {
-  return <h4>featured products</h4>
-}
+  const { loading, fetchProducts, products } = useProductsContext();
+  useEffect(() => {
+    fetchProducts();
+    console.log(products);
+  }, []);
+
+  if (loading) {
+    return (
+      <Wrapper>
+        <Loading />
+      </Wrapper>
+    );
+  }
+  return (
+    <Wrapper>
+      <div className="section-center">
+        <div className="title">
+          <h2>featured</h2>
+          <div className="underline"></div>
+        </div>
+
+        <div className="featured">
+          {products.slice(0, 4).map((product) => {
+            return <Product {...product} key={product.id} />;
+          })}
+        </div>
+        <Link to="/products" className="btn">
+          All Products
+        </Link>
+      </div>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.section`
   background: var(--clr-grey-10);
   .featured {
-    margin: 4rem auto;
+    margin: 1rem auto;
     display: grid;
     gap: 2.5rem;
+    justify-content: center;
+    margin-bottom: 0;
     img {
       height: 225px;
     }
@@ -31,6 +65,6 @@ const Wrapper = styled.section`
       grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
     }
   }
-`
+`;
 
-export default FeaturedProducts
+export default FeaturedProducts;

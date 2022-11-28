@@ -1,12 +1,41 @@
-import React from 'react'
-import styled from 'styled-components'
-import { formatPrice } from '../utils/helpers'
-import AmountButtons from './AmountButtons'
-import { FaTrash } from 'react-icons/fa'
-import { useCartContext } from '../context/cart_context'
-const CartItem = () => {
-  return <h4>cart item</h4>
-}
+import React from "react";
+import styled from "styled-components";
+import { formatPrice } from "../utils/helpers";
+import AmountButtons from "./AmountButtons";
+import { FaTrash } from "react-icons/fa";
+import { useCartContext } from "../context/cart_context";
+const CartItem = ({ name, image, id, amount, price }) => {
+  const { toggleAmount, removeFromCart } = useCartContext();
+  const increase = () => {
+    toggleAmount(id, "increase");
+  };
+  const decrease = () => {
+    toggleAmount(id, "decrease");
+  };
+
+  return (
+    <Wrapper>
+      <div className="title">
+        <img src={image} alt={name} />
+        <div>
+          <h5 className="name">{name}</h5>
+        </div>
+      </div>
+      <h5 className="price">{formatPrice(price)}</h5>
+      <div>
+        <AmountButtons
+          increase={increase}
+          amount={amount}
+          decrease={decrease}
+        />
+      </div>
+      <h5>{price}</h5>
+      <button className="btn" onClick={() => removeFromCart(id)}>
+        <FaTrash />
+      </button>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.article`
   .subtotal {
@@ -142,6 +171,6 @@ const Wrapper = styled.article`
       }
     }
   }
-`
+`;
 
-export default CartItem
+export default CartItem;

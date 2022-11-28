@@ -1,10 +1,33 @@
-import React from 'react'
-import styled from 'styled-components'
-import { formatPrice } from '../utils/helpers'
-import { Link } from 'react-router-dom'
+import React from "react";
+import styled from "styled-components";
+import { useFilterContext } from "../context/filter_context";
+import { formatPrice } from "../utils/helpers";
+import { Link } from "react-router-dom";
 const ListView = () => {
-  return <h4>list view</h4>
-}
+  const { products } = useFilterContext();
+  return (
+    <Wrapper>
+      <div className="products-container">
+        {products.map((product) => {
+          const { name, price, id, description, image } = product;
+          return (
+            <article>
+              <img src={image} alt={name} />
+              <div>
+                <h4>{name}</h4>
+                <p className="price">{price}</p>
+                <p>{description}</p>
+                <Link to={`/single-product/${id}`} className="btn">
+                  Details
+                </Link>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.section`
   display: grid;
@@ -13,11 +36,13 @@ const Wrapper = styled.section`
   img {
     width: 100%;
     display: block;
-    width: 300px;
     height: 200px;
     object-fit: cover;
     border-radius: var(--radius);
     margin-bottom: 1rem;
+  }
+  article {
+    margin-bottom: 0.7rem;
   }
   h4 {
     margin-bottom: 0.5rem;
@@ -28,13 +53,16 @@ const Wrapper = styled.section`
   }
   p {
     max-width: 45em;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
   }
   .btn {
-    font-size: 0.5rem;
+    font-size: 0.6rem;
     padding: 0.25rem 0.5rem;
   }
   @media (min-width: 992px) {
+    img {
+      width: 300px;
+    }
     article {
       display: grid;
       grid-template-columns: auto 1fr;
@@ -42,6 +70,6 @@ const Wrapper = styled.section`
       align-items: center;
     }
   }
-`
+`;
 
-export default ListView
+export default ListView;

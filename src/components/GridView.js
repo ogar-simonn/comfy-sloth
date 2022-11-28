@@ -1,14 +1,28 @@
-import React from 'react'
-import styled from 'styled-components'
-import Product from './Product'
-
+import React from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import Product from "./Product";
+import { useFilterContext } from "../context/filter_context";
 const GridView = () => {
-  return <h4>Grid View</h4>
-}
+  const { products } = useFilterContext();
+
+  return (
+    <Wrapper>
+      <div className="products-container">
+        {products.map((product, index) => {
+          return <Product {...product} key={index} />;
+        })}
+      </div>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.section`
   img {
     height: 175px;
+  }
+  .link {
+    display: block;
   }
 
   .products-container {
@@ -26,6 +40,6 @@ const Wrapper = styled.section`
       grid-template-columns: repeat(3, 1fr);
     }
   }
-`
+`;
 
-export default GridView
+export default GridView;

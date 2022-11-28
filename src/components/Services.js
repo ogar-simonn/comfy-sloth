@@ -1,10 +1,35 @@
-import React from 'react'
-import styled from 'styled-components'
-import { services } from '../utils/constants'
+import React from "react";
+import styled from "styled-components";
+import { services } from "../utils/constants";
 
 const Services = () => {
-  return <h4>services </h4>
-}
+  return (
+    <Wrapper>
+      <div className="section-center">
+        <h2>Custom furnitures just for you</h2>
+        <p>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur
+          voluptatum magni ipsam deleniti nulla, at sunt fugiat soluta culpa
+          dignissimos?
+        </p>
+        <div className="services-center">
+          {services.map((service) => {
+            const { id, icon, text, title } = service;
+            return (
+              <article className="service" key={id}>
+                <div>
+                  <span>{icon}</span>
+                  <h4>{title}</h4>
+                  <p>{text}</p>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.section`
   h3,
@@ -13,15 +38,16 @@ const Wrapper = styled.section`
   }
   padding: 5rem 0;
 
-  background: var(--clr-primary-10);
+  background: #f2f2f2;
 
   .header h3 {
     margin-bottom: 2rem;
   }
   p {
-    margin-bottom: 0;
+    margin-bottom: 0.2rem;
     line-height: 1.8;
     color: var(--clr-primary-3);
+    font-size: 1.2rem;
   }
   .services-center {
     margin-top: 4rem;
@@ -29,10 +55,12 @@ const Wrapper = styled.section`
     gap: 2.5rem;
   }
   .service {
-    background: var(--clr-primary-7);
+    background: var(--clr-primary-8);
     text-align: center;
     padding: 2.5rem 2rem;
     border-radius: var(--radius);
+    margin-bottom: 1rem;
+
     p {
       color: var(--clr-primary-2);
     }
@@ -68,5 +96,5 @@ const Wrapper = styled.section`
       transform: translateY(5rem);
     }
   }
-`
-export default Services
+`;
+export default Services;

@@ -1,10 +1,23 @@
-import React from 'react'
-import styled from 'styled-components'
-import { Filters, ProductList, Sort, PageHero } from '../components'
+import React, { useEffect } from "react";
+import { useFilterContext } from "../context/filter_context";
+import styled from "styled-components";
+import { Filters, ProductList, Sort, PageHero } from "../components";
 
 const ProductsPage = () => {
-  return <h4>products page</h4>
-}
+  const { fetchProducts, products } = useFilterContext();
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+  return (
+    <Wrapper className="section-center">
+      <Sort />
+      <div className="products">
+        <Filters />
+        <ProductList />
+      </div>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.div`
   .products {
@@ -17,6 +30,6 @@ const Wrapper = styled.div`
       grid-template-columns: 200px 1fr;
     }
   }
-`
+`;
 
-export default ProductsPage
+export default ProductsPage;

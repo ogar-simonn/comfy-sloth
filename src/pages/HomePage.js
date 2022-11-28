@@ -1,7 +1,14 @@
-import React from 'react'
-import { FeaturedProducts, Hero, Services, Contact } from '../components'
+import React from "react";
+import { FeaturedProducts, Hero, Services, Contact } from "../components";
 const HomePage = () => {
-  return <h4>home page</h4>
-}
+  return (
+    <section>
+      <Hero />
+      <FeaturedProducts />
+      <Services />
+      <Contact />
+    </section>
+  );
+};
 
-export default HomePage
+export default HomePage;

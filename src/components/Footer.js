@@ -1,8 +1,12 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
 const Footer = () => {
-  return <h4>footer</h4>
-}
+  return (
+    <Wrapper>
+      <p>comfy store &copy; 2022</p>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.footer`
   height: 5rem;
@@ -15,6 +19,10 @@ const Wrapper = styled.footer`
   span {
     color: var(--clr-primary-5);
   }
+  p {
+    color: var(--clr-white);
+    letter-spacing: var(--spacing);
+  }
   h5 {
     color: var(--clr-white);
     margin: 0.1rem;
@@ -26,6 +34,6 @@ const Wrapper = styled.footer`
   @media (min-width: 776px) {
     flex-direction: row;
   }
-`
+`;
 
-export default Footer
+export default Footer;

@@ -1,12 +1,56 @@
-import React from 'react'
-import styled from 'styled-components'
-import { useFilterContext } from '../context/filter_context'
-import { getUniqueValues, formatPrice } from '../utils/helpers'
-import { FaCheck } from 'react-icons/fa'
+import React from "react";
+import styled from "styled-components";
+import { useFilterContext } from "../context/filter_context";
+import { getUniqueValues, formatPrice } from "../utils/helpers";
+import { FaCheck } from "react-icons/fa";
 
 const Filters = () => {
-  return <h4>filters</h4>
-}
+  const { updateFilter, allProducts } = useFilterContext();
+  const categories = getUniqueValues(allProducts, "category");
+  const company = getUniqueValues(allProducts, "company");
+
+  return (
+    <Wrapper>
+      <form onSubmit={(e) => e.preventDefault()} className="form-control">
+        <input
+          type="text"
+          className="search-input"
+          placeholder="search"
+          name="text"
+          onChange={updateFilter}
+        />
+      </form>
+      <h5>category</h5>
+      {categories.map((category, index) => {
+        return (
+          <button key={index} name="category" onClick={updateFilter}>
+            {category}
+          </button>
+        );
+      })}
+      <div className="form-control">
+        <h5>company</h5>
+        <select className="company">
+          {company.map((c, index) => {
+            return (
+              <option name="company" value={c}>
+                {c}
+              </option>
+            );
+          })}
+        </select>
+      </div>
+      <div className="form-control">
+        <input type="range" />
+      </div>
+      <div className="form-control">
+        <label htmlFor="shipping">Free Shipping </label>
+        <input type="checkbox" name="shipping" id="shipping" />
+      </div>
+      <button className="btn">Clear filters</button>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.section`
   .form-control {
@@ -105,6 +149,6 @@ const Wrapper = styled.section`
       top: 1rem;
     }
   }
-`
+`;
 
-export default Filters
+export default Filters;
