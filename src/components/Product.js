@@ -10,7 +10,7 @@ const Product = ({ id, price, name, image }) => {
         <img src={image} alt={name} />
         <footer>
           <h5>{name}</h5>
-          <p>{price}</p>
+          <p>{formatPrice(price)}</p>
         </footer>
       </Link>
     </Wrapper>

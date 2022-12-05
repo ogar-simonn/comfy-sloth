@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-const ProductImages = ({ images }) => {
+const ProductImages = ({ images = [{ url: "" }] }) => {
   const [index, setIndex] = useState(0);
-  console.log(images);
   return (
     <Wrapper>
       <img src={images[index].url} className="main" />

@@ -1,20 +1,20 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import heroBcg from "../assets/hero-bcg.jpeg";
 import heroBcg2 from "../assets/hero-bcg-2.jpeg";
-
+import { Link } from "react-router-dom";
 const Hero = () => {
   return (
     <Wrapper className="section-center">
       <div>
         <h1>Design your comfort zone</h1>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi dolorum
-          cumque laborum voluptates repudiandae aperiam! Assumenda in quia natus
-          praesentium.
+          Our furnitures are made with the best materials in the world. To give
+          you the quality comfort you deserve.
         </p>
-        <button className="btn hero-btn">Shop Now</button>
+        <Link to="/products" className="btn hero-btn">
+          Shop Now
+        </Link>
       </div>
       <div className="img-container">
         <img src={heroBcg} className="main-img" />

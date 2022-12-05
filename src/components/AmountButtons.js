@@ -19,12 +19,19 @@ const AmountButtons = ({ amount, increase, decrease }) => {
 
 const Wrapper = styled.div`
   display: grid;
-  width: 140px;
+  width: 50px;
   justify-items: center;
   grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
   align-items: center;
   h2 {
     margin-bottom: 0;
+    font-size: 1rem;
+  }
+  @media (min-width: 530px) {
+    h2 {
+      font-size: 2rem;
+    }
   }
   button {
     background: transparent;

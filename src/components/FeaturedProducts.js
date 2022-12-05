@@ -8,16 +8,22 @@ import Product from "./Product";
 import { useEffect } from "react";
 
 const FeaturedProducts = () => {
-  const { loading, fetchProducts, products } = useProductsContext();
+  const { loading, fetchProducts, products, error } = useProductsContext();
   useEffect(() => {
     fetchProducts();
-    console.log(products);
   }, []);
 
   if (loading) {
     return (
       <Wrapper>
         <Loading />
+      </Wrapper>
+    );
+  }
+  if (error) {
+    return (
+      <Wrapper>
+        <Error func={fetchProducts} />
       </Wrapper>
     );
   }
@@ -47,7 +53,7 @@ const Wrapper = styled.section`
   .featured {
     margin: 1rem auto;
     display: grid;
-    gap: 2.5rem;
+    gap: 1rem;
     justify-content: center;
     margin-bottom: 0;
     img {
@@ -62,7 +68,7 @@ const Wrapper = styled.section`
   }
   @media (min-width: 576px) {
     .featured {
-      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     }
   }
 `;

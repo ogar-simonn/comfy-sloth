@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useProductsContext } from "../context/products_context";
 import { single_product_url as url } from "../utils/constants";
 import { formatPrice } from "../utils/helpers";
@@ -8,52 +8,47 @@ import {
   Error,
   ProductImages,
   AddToCart,
-  Stars,
   PageHero,
 } from "../components";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 
 const SingleProductPage = () => {
   const { id } = useParams();
-
-  const { fetchSingleProduct, singleProduct, loading } = useProductsContext();
-
+  const { fetchSingleProduct, loading, singleProduct, error } =
+    useProductsContext();
   useEffect(() => {
     fetchSingleProduct(`${url}${id}`);
-  }, []);
+  }, [id]);
   if (loading) {
     return <Loading />;
-  } else if (!singleProduct) {
-    return <Error />;
   }
-  const {
-    name,
-    colors,
-    description,
-    images,
-    reviews,
-    stars,
-    stock,
-    price,
-    company,
-  } = singleProduct;
+  if (error) {
+    return (
+      <Wrapper className="page-100">
+        <Error func={fetchSingleProduct} id={id} url={url} />
+      </Wrapper>
+    );
+  }
+  if (!singleProduct) {
+    return <Error func={fetchSingleProduct} id={id} url={url} />;
+  }
+  const { name, description, images, stock, price, company } = singleProduct;
   return (
     <Wrapper className="section-center page-100">
-      <PageHero title={"products"} product={name} />
+      <PageHero title={name} product={name} />
       <div className="product-center">
         <ProductImages images={images} />
         <div>
           <h4>{name}</h4>
-          <h5 className="price">{price}</h5>
+          <h5 className="price">{formatPrice(price)}</h5>
           <p>{description}</p>
-          <p>
+          <p className="info">
             <span>Available:</span> {stock > 0 ? "In stock" : "Not in stock"}
           </p>
-          <p>
+          <p className="info">
             <span>SKU</span> {id}
           </p>
-          <p>
+          <p className="info">
             <span>Brand: </span> {company}
           </p>
           <AddToCart product={singleProduct} id={id} />

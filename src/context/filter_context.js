@@ -11,14 +11,12 @@ import {
   CLEAR_FILTERS,
 } from "../actions";
 import { useProductsContext } from "./products_context";
-import GridView from "../components/GridView";
 
 const initialState = {
-  loading: true,
   view: "list-view",
-  active: 1,
   filteredProducts: [],
   allProducts: [],
+  sort: "price-lowest",
   filters: {
     text: "",
     company: "all",
@@ -35,20 +33,32 @@ const FilterContext = React.createContext();
 
 export const FilterProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
   const { products, fetchProducts } = useProductsContext();
   useEffect(() => {
+    dispatch({ type: SORT_PRODUCTS, payload: state.sort });
     dispatch({ type: FILTER_PRODUCTS });
-  }, [state.filter, products]);
+  }, [state.filters, products, state.sort]);
+
   useEffect(() => {
     dispatch({ type: LOAD_PRODUCTS, payload: products });
   }, [products]);
 
+  // view
   const displayGridView = () => {
     dispatch({ type: SET_GRIDVIEW });
   };
   const displayListView = () => {
     dispatch({ type: SET_LISTVIEW });
   };
+
+  // update sort
+  const updateSort = (e) => {
+    const value = e.target.value;
+    dispatch({ type: UPDATE_SORT, payload: { value } });
+  };
+
+  // update filter
   const updateFilter = (e) => {
     const name = e.target.name;
     let value = e.target.value;
@@ -60,6 +70,12 @@ export const FilterProvider = ({ children }) => {
     }
     dispatch({ type: UPDATE_FILTERS, payload: { value, name } });
   };
+
+  // clear filters
+  const clearFilters = () => {
+    dispatch({ type: CLEAR_FILTERS });
+  };
+
   return (
     <FilterContext.Provider
       value={{
@@ -69,6 +85,8 @@ export const FilterProvider = ({ children }) => {
         displayGridView,
         fetchProducts,
         updateFilter,
+        clearFilters,
+        updateSort,
       }}
     >
       {children}

@@ -3,7 +3,14 @@ import { useFilterContext } from "../context/filter_context";
 import { BsFillGridFill, BsList } from "react-icons/bs";
 import styled from "styled-components";
 const Sort = () => {
-  const { displayGridView, displayListView, view } = useFilterContext();
+  const {
+    displayGridView,
+    displayListView,
+    view,
+    filteredProducts: products,
+    updateSort,
+    sort,
+  } = useFilterContext();
   return (
     <Wrapper className="section-center">
       <div className="btn-container">
@@ -22,11 +29,17 @@ const Sort = () => {
           <BsList />
         </button>
       </div>
-      <p>{22} products found</p>
+      <p>{products.length} products found</p>
       <hr />
       <div>
         <label htmlFor="sort-input">Sort by:</label>
-        <select name="" id="sort-input" className="sort-input">
+        <select
+          name="sort"
+          id="sort-input"
+          className="sort-input"
+          value={sort}
+          onChange={updateSort}
+        >
           <option value="price-lowest">Price (Lowest)</option>
           <option value="price-highest">Price (Highest)</option>
           <option value="price-lowest">Name (A- Z)</option>

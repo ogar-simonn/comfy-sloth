@@ -1,15 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Navbar, Sidebar, Footer } from "./components";
-import styled from "styled-components";
 import {
   HomePage,
   AboutPage,
-  AuthWrapper,
   CartPage,
-  CheckoutPage,
   ErrorPage,
-  PrivateRoute,
   ProductsPage,
   SingleProductPage,
 } from "./pages";
@@ -32,9 +28,6 @@ function App() {
           <ProductsPage />
         </Route>
         <Route path="/single-product/:id" children={<SingleProductPage />} />
-        <Route path="/checkout">
-          <CheckoutPage />
-        </Route>
         <Route path="*">
           <ErrorPage />
         </Route>

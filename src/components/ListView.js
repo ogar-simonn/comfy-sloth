@@ -1,10 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { useFilterContext } from "../context/filter_context";
 import { formatPrice } from "../utils/helpers";
 import { Link } from "react-router-dom";
-const ListView = () => {
-  const { products } = useFilterContext();
+const ListView = ({ products }) => {
   return (
     <Wrapper>
       <div className="products-container">
@@ -15,7 +13,7 @@ const ListView = () => {
               <img src={image} alt={name} />
               <div>
                 <h4>{name}</h4>
-                <p className="price">{price}</p>
+                <p className="price">{formatPrice(price)}</p>
                 <p>{description}</p>
                 <Link to={`/single-product/${id}`} className="btn">
                   Details

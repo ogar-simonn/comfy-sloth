@@ -6,10 +6,13 @@ import { FaTimes } from "react-icons/fa";
 import { links } from "../utils/constants";
 import styled from "styled-components";
 import AuthButton from "./AuthButton";
+import UserProfile from "./UserProfile";
 import { useUserContext } from "../context/user_context";
 
 const Sidebar = () => {
+  const { isAuthenticated, myUser, isLoading } = useUserContext();
   const { closeSidebar, isSidebarOpen } = useProductsContext();
+
   return (
     <SidebarContainer>
       <div className={`sidebar ${isSidebarOpen ? "show-sidebar" : ""}`}>
@@ -22,6 +25,11 @@ const Sidebar = () => {
             <FaTimes />
           </button>
         </div>
+        <UserProfile
+          myUser={myUser}
+          isAuthenticated={isAuthenticated}
+          isLoading={isLoading}
+        />
         <ul className="links">
           {links.map((link) => {
             const { id, text, url } = link;
@@ -32,6 +40,7 @@ const Sidebar = () => {
             );
           })}
         </ul>
+        <AuthButton />
       </div>
     </SidebarContainer>
   );

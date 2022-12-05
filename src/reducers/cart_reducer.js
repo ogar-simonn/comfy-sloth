@@ -1,11 +1,9 @@
-import { FaAcquisitionsIncorporated } from "react-icons/fa";
 import {
   ADD_TO_CART,
   CLEAR_CART,
   COUNT_CART_TOTALS,
   REMOVE_CART_ITEM,
   TOGGLE_CART_ITEM_AMOUNT,
-  UPDATE_FILTERS,
 } from "../actions";
 
 const cart_reducer = (state, action) => {
@@ -35,12 +33,10 @@ const cart_reducer = (state, action) => {
       return {
         ...state,
         cart: [...state.cart, newCartItem],
-        totalItem: state.cart.length,
       };
     }
   } else if (action.type === REMOVE_CART_ITEM) {
-    const cartArr = state.cart.filter((item) => item.id === action.payload.id);
-    console.log(cartArr);
+    const cartArr = state.cart.filter((item) => item.id !== action.payload);
     return { ...state, cart: cartArr };
   } else if (action.type === TOGGLE_CART_ITEM_AMOUNT) {
     const { id, type } = action.payload;
@@ -65,6 +61,20 @@ const cart_reducer = (state, action) => {
     return { ...state, cart: tempCart };
   } else if (action.type === CLEAR_CART) {
     return { ...state, cart: [] };
+  } else if (action.type === COUNT_CART_TOTALS) {
+    const { totalItems, totalAmount } = state.cart.reduce(
+      (total, cartItem) => {
+        const { amount, price } = cartItem;
+        total.totalAmount += price * amount;
+        total.totalItems += amount;
+        return total;
+      },
+      {
+        totalItems: 0,
+        totalAmount: 0,
+      }
+    );
+    return { ...state, totalItems, totalAmount };
   }
   return state;
   // throw new Error(`No Matching "${action.type}" - action type`);

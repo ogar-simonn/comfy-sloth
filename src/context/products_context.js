@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext, useEffect, useReducer } from "react";
+import React, { useContext, useReducer } from "react";
 import reducer from "../reducers/products_reducer";
 import { products_url as url } from "../utils/constants";
 import {
@@ -17,7 +17,7 @@ const initialState = {
   isSidebarOpen: false,
   loading: true,
   products: [],
-  errorMsg: "",
+  error: false,
   singleProduct: {},
 };
 
@@ -25,12 +25,16 @@ const ProductsContext = React.createContext();
 
 export const ProductsProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  // side bar functionality
   const closeSidebar = () => {
     dispatch({ type: SIDEBAR_CLOSE });
   };
   const openSidebar = () => {
     dispatch({ type: SIDEBAR_OPEN });
   };
+
+  // fetch all Products
   const fetchProducts = async () => {
     dispatch({ type: GET_PRODUCTS_BEGIN });
     await axios
@@ -43,6 +47,8 @@ export const ProductsProvider = ({ children }) => {
       })
       .catch((err) => dispatch({ type: GET_PRODUCTS_ERROR }));
   };
+
+  // fetch single product
   const fetchSingleProduct = async (url) => {
     dispatch({ type: GET_SINGLE_PRODUCT_BEGIN });
     await axios

@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { useFilterContext } from "../context/filter_context";
 import styled from "styled-components";
-import { Filters, ProductList, Sort, PageHero } from "../components";
+import { Filters, ProductList, Sort } from "../components";
 
 const ProductsPage = () => {
-  const { fetchProducts, products } = useFilterContext();
+  const { fetchProducts } = useFilterContext();
   useEffect(() => {
     fetchProducts();
   }, []);

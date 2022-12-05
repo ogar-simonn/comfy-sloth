@@ -1,11 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import Product from "./Product";
-import { useFilterContext } from "../context/filter_context";
-const GridView = () => {
-  const { products } = useFilterContext();
 
+const GridView = ({ products }) => {
   return (
     <Wrapper>
       <div className="products-container">

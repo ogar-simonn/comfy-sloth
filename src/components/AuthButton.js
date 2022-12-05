@@ -1,29 +1,43 @@
 import React from "react";
-import { FaShoppingCart, FaUserMinus, FaUserPlus } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { useProductsContext } from "../context/products_context";
-import { useCartContext } from "../context/cart_context";
 import { useUserContext } from "../context/user_context";
 
 const AuthButton = () => {
-  return <h4>cart buttons </h4>;
+  const { myUser, loginWithRedirect, logout } = useUserContext();
+  if (myUser === null || myUser === undefined || myUser.length < 1) {
+    return (
+      <Wrapper>
+        <button className="btn auth-btn" onClick={loginWithRedirect}>
+          login
+        </button>
+      </Wrapper>
+    );
+  }
+  return (
+    <Wrapper>
+      <div>
+        <button
+          className="btn auth-btn"
+          onClick={() => {
+            localStorage.removeItem("user");
+            logout({ returnTo: window.location.origin });
+          }}
+        >
+          logout
+        </button>
+      </div>
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  width: 225px;
-
+  padding: 1rem;
   .auth-btn {
     display: flex;
     align-items: center;
-    background: transparent;
     border-color: transparent;
-    font-size: 1.5rem;
+    font-size: 1rem;
     cursor: pointer;
-    color: var(--clr-grey-1);
     letter-spacing: var(--spacing);
     svg {
       margin-left: 5px;

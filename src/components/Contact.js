@@ -14,9 +14,14 @@ const Contact = () => {
           </p>
         </div>
         <div className="form-section">
-          <form className="contact-form">
+          <form
+            className="contact-form"
+            action="https://formspree.io/f/mqkjreor"
+            method="POST"
+          >
             <input
-              type="text"
+              type="email"
+              name="email"
               className="form-input"
               placeholder="Enter email"
             />

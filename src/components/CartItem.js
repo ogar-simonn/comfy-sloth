@@ -19,18 +19,17 @@ const CartItem = ({ name, image, id, amount, price }) => {
         <img src={image} alt={name} />
         <div>
           <h5 className="name">{name}</h5>
+          <h5 className="price-small">{formatPrice(price)}</h5>
         </div>
       </div>
       <h5 className="price">{formatPrice(price)}</h5>
-      <div>
-        <AmountButtons
-          increase={increase}
-          amount={amount}
-          decrease={decrease}
-        />
-      </div>
-      <h5>{price}</h5>
-      <button className="btn" onClick={() => removeFromCart(id)}>
+      <AmountButtons amount={amount} increase={increase} decrease={decrease} />
+      <h5 className="subtotal">{formatPrice(price * amount)}</h5>
+      <button
+        type="button"
+        className="remove-btn"
+        onClick={() => removeFromCart(id)}
+      >
         <FaTrash />
       </button>
     </Wrapper>
@@ -38,6 +37,7 @@ const CartItem = ({ name, image, id, amount, price }) => {
 };
 
 const Wrapper = styled.article`
+  padding-top: 1rem;
   .subtotal {
     display: none;
   }
@@ -49,7 +49,7 @@ const Wrapper = styled.article`
   grid-template-rows: 75px;
   gap: 3rem 1rem;
   justify-items: center;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   align-items: center;
   .title {
     grid-template-rows: 75px;
@@ -119,6 +119,7 @@ const Wrapper = styled.article`
     cursor: pointer;
   }
   @media (min-width: 776px) {
+    padding-top: 0;
     .subtotal {
       display: block;
       margin-bottom: 0;

@@ -1,6 +1,5 @@
 import React, { useEffect, useContext, useReducer } from "react";
 import reducer from "../reducers/cart_reducer";
-import axios from "axios";
 import {
   ADD_TO_CART,
   REMOVE_CART_ITEM,
@@ -9,10 +8,20 @@ import {
   COUNT_CART_TOTALS,
 } from "../actions";
 
+const getLocalStorage = () => {
+  let cart = localStorage.getItem("cart");
+  if (cart) {
+    return JSON.parse(localStorage.getItem("cart"));
+  } else {
+    return [];
+  }
+};
+
 const initialState = {
-  cart: [],
+  cart: getLocalStorage(),
   totalItems: 0,
   totalAmount: 0,
+  shippingFee: 100,
 };
 
 const CartContext = React.createContext();
@@ -29,6 +38,8 @@ export const CartProvider = ({ children }) => {
   const removeFromCart = (id) => {
     dispatch({ type: REMOVE_CART_ITEM, payload: id });
   };
+
+  // toggle cart amount
   const toggleAmount = (id, type) => {
     if (type === "decrease")
       dispatch({ type: TOGGLE_CART_ITEM_AMOUNT, payload: { id, type } });
@@ -36,10 +47,18 @@ export const CartProvider = ({ children }) => {
       dispatch({ type: TOGGLE_CART_ITEM_AMOUNT, payload: { id, type } });
   };
 
+  const countCountTotal = () => {
+    dispatch({ type: COUNT_CART_TOTALS });
+  };
   //clear cart
   const clearCart = () => {
     dispatch({ type: CLEAR_CART });
   };
+
+  useEffect(() => {
+    countCountTotal();
+    localStorage.setItem("cart", JSON.stringify(state.cart));
+  }, [state.cart]);
 
   return (
     <CartContext.Provider

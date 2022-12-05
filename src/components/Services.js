@@ -52,17 +52,18 @@ const Wrapper = styled.section`
   .services-center {
     margin-top: 4rem;
     display: grid;
-    gap: 2.5rem;
+    gap: 1rem;
+    justify-content: center;
   }
   .service {
-    background: var(--clr-primary-8);
+    background: var(--clr-primary-4);
     text-align: center;
     padding: 2.5rem 2rem;
     border-radius: var(--radius);
     margin-bottom: 1rem;
-
+    width: 20rem;
     p {
-      color: var(--clr-primary-2);
+      color: white;
     }
   }
   span {

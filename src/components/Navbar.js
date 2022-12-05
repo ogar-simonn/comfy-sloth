@@ -7,8 +7,8 @@ import { Link } from "react-router-dom";
 import { links } from "../utils/constants";
 import AuthButton from "./AuthButton";
 import { useProductsContext } from "../context/products_context";
-import { useUserContext } from "../context/user_context";
 import { useCartContext } from "../context/cart_context";
+import UserProfile from "./UserProfile";
 const Nav = () => {
   const { totalItems } = useCartContext();
   const { openSidebar } = useProductsContext();
@@ -20,7 +20,9 @@ const Nav = () => {
             <button className="nav-toggle" onClick={openSidebar}>
               <FaBars />
             </button>
-            <img src={logo} alt="comfy slot" />
+            <Link to="/">
+              <img src={logo} alt="comfy slot" />
+            </Link>
             <div className="nav-links">
               {links.map((link) => {
                 const { id, text, url } = link;
@@ -31,10 +33,14 @@ const Nav = () => {
                 );
               })}
             </div>
-            <Link to="/checkout" className="cart-container">
-              <AiOutlineShoppingCart className="cart-btn" />
-              <p className="cart-value">{totalItems}</p>
-            </Link>
+            <div className="cart-auth-container">
+              <Link to="/cart" className="cart-container">
+                <AiOutlineShoppingCart className="cart-btn" />
+                <p className="cart-value">{totalItems}</p>
+              </Link>
+              <UserProfile />
+              <AuthButton />
+            </div>
           </div>
         </div>
       </nav>
@@ -47,7 +53,9 @@ const NavContainer = styled.nav`
   display: flex;
   align-items: center;
   justify-content: center;
-
+  .auth-btn {
+    display: none;
+  }
   .nav-center {
     width: 90vw;
     margin: 0 auto;
@@ -70,6 +78,11 @@ const NavContainer = styled.nav`
     svg {
       font-size: 2rem;
     }
+  }
+  .cart-auth-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
   .cart-container {
     display: flex;
@@ -108,12 +121,18 @@ const NavContainer = styled.nav`
   .nav-links {
     display: none;
   }
+
   .cart-btn-wrapper {
     display: none;
   }
   @media (min-width: 992px) {
     .nav-toggle {
       display: none;
+    }
+
+    .auth-btn {
+      display: block;
+      margin-left: 1rem;
     }
     .nav-center {
       display: grid;
@@ -142,6 +161,10 @@ const NavContainer = styled.nav`
           border-bottom: 2px solid var(--clr-primary-7);
         }
       }
+    }
+    .cart-btn {
+      margin-right: 0.5rem;
+      display: block;
     }
     .cart-btn-wrapper {
       display: grid;
