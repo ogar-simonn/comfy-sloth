@@ -25,13 +25,15 @@ const CartItem = ({ name, image, id, amount, price }) => {
       <h5 className="price">{formatPrice(price)}</h5>
       <AmountButtons amount={amount} increase={increase} decrease={decrease} />
       <h5 className="subtotal">{formatPrice(price * amount)}</h5>
-      <button
-        type="button"
-        className="remove-btn"
-        onClick={() => removeFromCart(id)}
-      >
-        <FaTrash />
-      </button>
+      <div>
+        <button
+          type="button"
+          className="remove-btn"
+          onClick={() => removeFromCart(id)}
+        >
+          <FaTrash />
+        </button>
+      </div>
     </Wrapper>
   );
 };
@@ -45,12 +47,14 @@ const Wrapper = styled.article`
     display: none;
   }
   display: grid;
-  grid-template-columns: 200px auto auto;
-  grid-template-rows: 75px;
+  grid-template-columns: 200px 60px 50px;
+  grid-template-rows: 20px;
   gap: 3rem 1rem;
+  justify-content: center;
   justify-items: center;
   margin-bottom: 2rem;
   align-items: center;
+  width: 100%;
   .title {
     grid-template-rows: 75px;
     display: grid;
